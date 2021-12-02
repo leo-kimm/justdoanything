@@ -1,0 +1,59 @@
+from pandas as pd
+from numpy as np
+from sklearn.preprocessing import StandardScaler/MinMaxScaler
+from sklearn.model_selection import train_test_split/GridSearchCV
+
+# 모델링
+from sklearn.ensemble import RandomForestClassifier #이항/다항분류
+from sklearn.linear_model import LogisticRegression # 이항분류
+from sklearn.linear_model import LinearRegression # 회귀
+
+# 정확도 예측
+from sklearn.metrics import roc_auc_score # 분류
+from sklearn.metrics imort R2_score  # 회귀 
+
+ # 처리순서
+데이터 확인
+  pd.DataFrame(df)
+  pd.describe(df)
+  df.isnull().sum()
+  
+결측치 처리
+  df.drop([' '], axis = 0 or 1, inplace = True) # 행/열 제거시키기
+  df[' '] = df[' '].fillna(value=df[' '].mean() # 해당 행 NA 변환시키기
+
+이상치 처리 (굳이 할필요 없을듯)
+  df.descibe()를 이용하여 25% ~ 75% 가져오기
+
+상관계수 확인(굳이 불필요)
+  df.corr()['target'] # target의 상관계수가 나옴(범주형 제외)
+
+feature_selection
+ df = df[['a','b','c']] # 상관계수 등을 고려하여 데이터 가져오기
+
+더비변수 처리
+  df = pd.get_dummies(df)
+
+데이터셋 분리
+  train_feature, test_feature, train_target, test_target = train_test_split(X_train, y_train, train_size=0.8)
+
+정규화
+  scaler = 0000()
+  X_tain = scaler.fit_transform(X_train)
+  X_test = scaler.transform(X_test)
+
+모델링
+  model = ()
+  parameter = { 'max_depth' : [  ]} # RF => max_depth, 로지스틱 => c
+  clf = GridSearchCV(model, parameter, cv= 3)
+  clf.fit(train_feature, train_target)
+  clf_best = clf.best_estimator_
+  clf_par  = clf.best_params_
+
+정확도 확인 
+ pred_1 = clf_best.predict_proba(test_feature)[:,1]
+ print(roc_auc_score(test_target, pred_1))
+
+예측/CSV에 넣기
+ pred = clf_best.predict_proba(X_test)[:,1]
+ to_csv({cust_id : 0000, pred = pred, inplace=False)
